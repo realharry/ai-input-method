@@ -15,6 +15,10 @@ chrome.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
         chrome.tabs.sendMessage(tabs[0].id, {
           type: 'INSERT_EMOJI',
           emoji: message.emoji
+        }).catch((error) => {
+          // Handle connection errors gracefully
+          console.log('Content script not available on this tab:', error.message);
+          // Could optionally notify the side panel that insertion failed
         });
       }
     });
