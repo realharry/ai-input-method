@@ -112,11 +112,47 @@ if ((window as any).emojiPickerContentScript) {
   }
 
   function copyToClipboard(text: string) {
-    navigator.clipboard.writeText(text).then(() => {
-      console.log('Emoji copied to clipboard:', text);
-    }).catch(err => {
-      console.error('Failed to copy emoji to clipboard:', err);
-    });
+    // Modern clipboard API with proper error handling
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => {
+        console.log('Emoji copied to clipboard:', text);
+      }).catch(err => {
+        console.error('Failed to copy emoji to clipboard:', err);
+        // Fallback to legacy method
+        fallbackCopyToClipboard(text);
+      });
+    } else {
+      // Fallback for older browsers or non-secure contexts
+      fallbackCopyToClipboard(text);
+    }
+  }
+
+  function fallbackCopyToClipboard(text: string) {
+    try {
+      // Create a temporary textarea element
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      // Try to copy using the older execCommand method
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textArea);
+
+      if (successful) {
+        console.log('Emoji copied to clipboard using fallback method:', text);
+      } else {
+        console.error('Fallback copy method failed');
+        showToast('Copy failed - please copy manually: ' + text);
+      }
+    } catch (err) {
+      console.error('Fallback copy method error:', err);
+      showToast('Copy failed - please copy manually: ' + text);
+    }
   }
 
   function showToast(message: string) {
