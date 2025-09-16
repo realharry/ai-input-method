@@ -19,7 +19,7 @@
     }
   ],
   "side_panel": {
-    "default_path": "sidepanel-simple.html"
+    "default_path": "sidepanel-minimal.html"
   },
   "action": {
     "default_title": "Open Emoji Picker"
