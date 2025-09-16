@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Picker Side Panel Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        }
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+        .emoji-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        .emoji-item:hover {
+            background-color: #f3f4f6;
+        }
+        .emoji-item .emoji {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .emoji-item .name {
+            font-size: 10px;
+            color: #6b7280;
+            text-align: center;
+            line-height: 1.2;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .category-button {
+            padding: 4px 12px;
+            font-size: 12px;
+            border-radius: 9999px;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        .category-button.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .category-button:not(.active) {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        .category-button:not(.active):hover {
+            background-color: #e5e7eb;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px 40px 8px 40px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+<body class="bg-white" style="width: 350px; height: 600px;">
+    <div class="h-full flex flex-col">
+        <!-- Header -->
+        <div class="p-4 border-b border-gray-200">
+            <h1 class="text-lg font-semibold text-gray-900 mb-4">Emoji Picker</h1>
+            <div class="relative">
+                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search emojis..." value="">
+            </div>
+        </div>
+        
+        <!-- Category Filters -->
+        <div class="p-4 border-b border-gray-200">
+            <div class="flex flex-wrap gap-1">
+                <button class="category-button active">All</button>
+                <button class="category-button">Smileys</button>
+                <button class="category-button">People</button>
+                <button class="category-button">Animals</button>
+                <button class="category-button">Food</button>
+                <button class="category-button">Activities</button>
+                <button class="category-button">Travel</button>
+                <button class="category-button">Objects</button>
+                <button class="category-button">Symbols</button>
+                <button class="category-button">Flags</button>
+            </div>
+        </div>
+
+        <!-- Emoji Grid -->
+        <div class="flex-1 p-4 overflow-y-auto">
+            <div class="emoji-grid">
+                <!-- Smileys & Emotion -->
+                <div class="emoji-item">
+                    <span class="emoji">😀</span>
+                    <span class="name">grinning face</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">😃</span>
+                    <span class="name">big eyes</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">😄</span>
+                    <span class="name">smiling eyes</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">😁</span>
+                    <span class="name">beaming</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🥰</span>
+                    <span class="name">hearts</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">😍</span>
+                    <span class="name">heart-eyes</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🤩</span>
+                    <span class="name">star-struck</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">😘</span>
+                    <span class="name">blowing kiss</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🤔</span>
+                    <span class="name">thinking</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">😎</span>
+                    <span class="name">sunglasses</span>
+                </div>
+                
+                <!-- People & Body -->
+                <div class="emoji-item">
+                    <span class="emoji">👋</span>
+                    <span class="name">waving hand</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">👍</span>
+                    <span class="name">thumbs up</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">👎</span>
+                    <span class="name">thumbs down</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">👏</span>
+                    <span class="name">clapping</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🙏</span>
+                    <span class="name">folded hands</span>
+                </div>
+                
+                <!-- Animals & Nature -->
+                <div class="emoji-item">
+                    <span class="emoji">🐶</span>
+                    <span class="name">dog face</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🐱</span>
+                    <span class="name">cat face</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🦊</span>
+                    <span class="name">fox</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🐻</span>
+                    <span class="name">bear</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🐼</span>
+                    <span class="name">panda</span>
+                </div>
+                
+                <!-- Food & Drink -->
+                <div class="emoji-item">
+                    <span class="emoji">🍎</span>
+                    <span class="name">red apple</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🍌</span>
+                    <span class="name">banana</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🍕</span>
+                    <span class="name">pizza</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🍔</span>
+                    <span class="name">hamburger</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🍰</span>
+                    <span class="name">cake</span>
+                </div>
+                
+                <!-- Activities -->
+                <div class="emoji-item">
+                    <span class="emoji">⚽</span>
+                    <span class="name">soccer ball</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🏀</span>
+                    <span class="name">basketball</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🎨</span>
+                    <span class="name">artist palette</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🎵</span>
+                    <span class="name">musical note</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🎮</span>
+                    <span class="name">video game</span>
+                </div>
+                
+                <!-- Travel & Places -->
+                <div class="emoji-item">
+                    <span class="emoji">🚗</span>
+                    <span class="name">car</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">✈️</span>
+                    <span class="name">airplane</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🚀</span>
+                    <span class="name">rocket</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🏠</span>
+                    <span class="name">house</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🌍</span>
+                    <span class="name">earth</span>
+                </div>
+                
+                <!-- Objects -->
+                <div class="emoji-item">
+                    <span class="emoji">📱</span>
+                    <span class="name">mobile phone</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">💻</span>
+                    <span class="name">laptop</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">⌨️</span>
+                    <span class="name">keyboard</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">🖱️</span>
+                    <span class="name">mouse</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">📷</span>
+                    <span class="name">camera</span>
+                </div>
+                
+                <!-- Symbols -->
+                <div class="emoji-item">
+                    <span class="emoji">❤️</span>
+                    <span class="name">red heart</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">💙</span>
+                    <span class="name">blue heart</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">💚</span>
+                    <span class="name">green heart</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">⭐</span>
+                    <span class="name">star</span>
+                </div>
+                <div class="emoji-item">
+                    <span class="emoji">✨</span>
+                    <span class="name">sparkles</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-3 border-t border-gray-200 text-xs text-gray-500 text-center">
+            Click any emoji to insert into text field or copy to clipboard
+        </div>
+    </div>
+
+    <script>
+        // Add some basic interactivity for demo purposes
+        document.querySelectorAll('.emoji-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const emoji = this.querySelector('.emoji').textContent;
+                // Show a temporary toast
+                const toast = document.createElement('div');
+                toast.textContent = `${emoji} copied!`;
+                toast.style.cssText = 'position: fixed; top: 20px; right: 20px; background: black; color: white; padding: 8px 16px; border-radius: 4px; font-size: 12px; z-index: 1000; opacity: 1; transition: opacity 0.3s;';
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => document.body.removeChild(toast), 300);
+                }, 2000);
+            });
+        });
+
+        // Category button functionality
+        document.querySelectorAll('.category-button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.category-button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
