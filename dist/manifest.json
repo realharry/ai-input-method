@@ -2,13 +2,15 @@
   "manifest_version": 3,
   "name": "AI Input Method - Emoji Picker",
   "version": "1.0.0",
-  "description": "A Chrome extension that provides an emoji picker via popup interface.",
+  "description": "A Chrome extension that provides an input method for emojis via the SidePanel UI.",
+  "minimum_chrome_version": "114",
   "permissions": [
     "activeTab",
+    "sidePanel",
     "storage"
   ],
   "background": {
-    "service_worker": "background-popup.js"
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
@@ -16,8 +18,10 @@
       "js": ["content-script.js"]
     }
   ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
   "action": {
-    "default_popup": "popup.html",
     "default_title": "Open Emoji Picker"
   },
   "icons": {

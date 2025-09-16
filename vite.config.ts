@@ -15,18 +15,12 @@ export default defineConfig({
       output: {
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
-        assetFileNames: (assetInfo) => {
-          const info = assetInfo.name!.split('.');
-          const extType = info[info.length - 1];
-          if (/\.(css)$/.test(assetInfo.name!)) {
-            return '[name].[ext]';
-          }
-          return `${assetInfo.name}`;
-        }
+        assetFileNames: '[name].[ext]'
       }
     },
     outDir: 'dist',
     sourcemap: false,
+    emptyOutDir: false, // Don't clear dist folder to preserve manifest files
   },
   resolve: {
     alias: {
