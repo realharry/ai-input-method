@@ -3,6 +3,7 @@
   "name": "AI Input Method - Emoji Picker",
   "version": "1.0.0",
   "description": "A Chrome extension that provides an input method for emojis via the SidePanel UI.",
+  "minimum_chrome_version": "114",
   "permissions": [
     "activeTab",
     "sidePanel",
@@ -27,5 +28,8 @@
     "16": "icon16.png",
     "48": "icon48.png",
     "128": "icon128.png"
-  }
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ]
 }

@@ -1,20 +1,8 @@
 // Background script for the Chrome extension
 chrome.action.onClicked.addListener((tab) => {
   // Open the side panel when the extension icon is clicked
-  if (tab.id) {
+  if (tab.windowId) {
     chrome.sidePanel.open({ windowId: tab.windowId });
-  }
-});
-
-// Enable the side panel for all tabs
-chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
-  if (info.status === 'complete' && tab.url) {
-    // Enable the side panel for this tab
-    await chrome.sidePanel.setOptions({
-      tabId,
-      path: 'sidepanel.html',
-      enabled: true
-    });
   }
 });
 
