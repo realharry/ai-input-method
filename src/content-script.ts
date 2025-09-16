@@ -6,34 +6,50 @@ if ((window as any).emojiPickerContentScript) {
 } else {
   (window as any).emojiPickerContentScript = true;
 
-  // Track the currently focused text element
+  // Track the currently focused text element with more robust detection
   let currentFocusedElement: HTMLInputElement | HTMLTextAreaElement | HTMLElement | null = null;
+  let lastActiveElement: HTMLInputElement | HTMLTextAreaElement | HTMLElement | null = null;
+
+  // Function to check if an element is a valid text input
+  function isTextInput(element: HTMLElement): boolean {
+    if (element.tagName === 'TEXTAREA') return true;
+    if (element.tagName === 'INPUT') {
+      const inputType = (element as HTMLInputElement).type.toLowerCase();
+      return ['text', 'search', 'url', 'tel', 'email', 'password', 'number'].includes(inputType);
+    }
+    if (element.contentEditable === 'true') return true;
+    return false;
+  }
+
+  // Enhanced focus tracking with multiple event listeners
+  function updateFocusedElement(element: HTMLElement | null) {
+    if (element && isTextInput(element)) {
+      currentFocusedElement = element;
+      lastActiveElement = element;
+      console.log('Text input focused:', element.tagName, (element as HTMLInputElement).type || 'contentEditable');
+    }
+  }
 
   // Listen for focus events on text inputs
   document.addEventListener('focusin', (event) => {
-    const target = event.target as HTMLElement;
-    
-    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
-      const element = target as HTMLInputElement | HTMLTextAreaElement;
-      
-      // Check if it's a text input type
-      if (target.tagName === 'TEXTAREA' || 
-          (target.tagName === 'INPUT' && 
-           ['text', 'search', 'url', 'tel', 'email', 'password'].includes((target as HTMLInputElement).type))) {
-        currentFocusedElement = element;
-        console.log('Focused on text input:', target.tagName, (target as HTMLInputElement).type);
-      }
-    } else if (target.contentEditable === 'true') {
-      // Handle contentEditable elements
-      currentFocusedElement = target;
-      console.log('Focused on contentEditable element');
-    }
+    updateFocusedElement(event.target as HTMLElement);
   });
 
-  // Listen for focus out events
+  // Listen for click events to catch inputs that might not fire focusin
+  document.addEventListener('click', (event) => {
+    updateFocusedElement(event.target as HTMLElement);
+  });
+
+  // Listen for focus out events with delay to handle quick refocus
   document.addEventListener('focusout', () => {
-    console.log('Focus lost from text input');
-    currentFocusedElement = null;
+    setTimeout(() => {
+      // Only clear if no new text input got focus
+      const activeElement = document.activeElement as HTMLElement;
+      if (!activeElement || !isTextInput(activeElement)) {
+        console.log('Focus lost from text input');
+        currentFocusedElement = null;
+      }
+    }, 100);
   });
 
   // Listen for messages from the background script
