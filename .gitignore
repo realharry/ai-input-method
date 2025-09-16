@@ -80,7 +80,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+# dist - keep build output for Chrome extension
 
 # Gatsby files
 .cache/

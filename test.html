@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Picker Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .demo-content {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .emoji-demo {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-content">
+        <h1>🎉 Emoji Picker Extension Test Page</h1>
+        <p>This page is designed to test the Emoji Picker Chrome extension. Try the following:</p>
+        <ol>
+            <li>Click on any text input below</li>
+            <li>Open the Emoji Picker from the Chrome side panel</li>
+            <li>Click on any emoji to insert it at the cursor position</li>
+        </ol>
+        <div class="emoji-demo">
+            Sample emojis: 😀 😃 😄 😁 🥰 😍 🤩 🤔 👋 🎨 🚀 ❤️
+        </div>
+    </div>
+
+    <form>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name here...">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="your.email@example.com">
+        </div>
+
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" placeholder="Type your message here... You can add emojis using the extension!"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="search">Search:</label>
+            <input type="search" id="search" name="search" placeholder="Search for something...">
+        </div>
+
+        <div class="form-group">
+            <label for="comments">Comments:</label>
+            <div contenteditable="true" style="border: 1px solid #ddd; padding: 10px; min-height: 100px; border-radius: 4px; background: white;">
+                This is a contentEditable div. You can type here and test emoji insertion...
+            </div>
+        </div>
+    </form>
+
+    <div class="demo-content">
+        <h2>🔧 Testing Instructions</h2>
+        <ul>
+            <li>Focus on any input field above</li>
+            <li>Open the extension side panel</li>
+            <li>Search for emojis or browse by category</li>
+            <li>Click any emoji to insert it</li>
+            <li>Test both regular inputs and the contentEditable div</li>
+            <li>Try copying emojis when no field is focused</li>
+        </ul>
+    </div>
+</body>
+</html>
