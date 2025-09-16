@@ -1,7 +1,7 @@
 // Content script to handle emoji insertion into text fields
 
 // Track the currently focused text element
-let currentFocusedElement: HTMLInputElement | HTMLTextAreaElement | null = null;
+let currentFocusedElement: HTMLInputElement | HTMLTextAreaElement | HTMLElement | null = null;
 
 // Listen for focus events on text inputs
 document.addEventListener('focusin', (event) => {
@@ -15,39 +15,51 @@ document.addEventListener('focusin', (event) => {
         (target.tagName === 'INPUT' && 
          ['text', 'search', 'url', 'tel', 'email', 'password'].includes((target as HTMLInputElement).type))) {
       currentFocusedElement = element;
+      console.log('Focused on text input:', target.tagName, (target as HTMLInputElement).type);
     }
   } else if (target.contentEditable === 'true') {
     // Handle contentEditable elements
-    currentFocusedElement = target as any;
+    currentFocusedElement = target;
+    console.log('Focused on contentEditable element');
   }
 });
 
 // Listen for focus out events
 document.addEventListener('focusout', () => {
+  console.log('Focus lost from text input');
   currentFocusedElement = null;
 });
 
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
+  console.log('Content script received message:', message);
   if (message.type === 'INSERT_EMOJI') {
     insertEmojiAtCursor(message.emoji);
   }
 });
 
 function insertEmojiAtCursor(emoji: string) {
+  console.log('Attempting to insert emoji:', emoji, 'into element:', currentFocusedElement);
+  
   if (!currentFocusedElement) {
     // If no text field is focused, copy to clipboard as fallback
+    console.log('No focused element, copying to clipboard');
     copyToClipboard(emoji);
+    showToast('Emoji copied to clipboard!');
     return;
   }
 
   if (currentFocusedElement.contentEditable === 'true') {
     // Handle contentEditable elements
-    insertIntoContentEditable(currentFocusedElement as HTMLElement, emoji);
+    console.log('Inserting into contentEditable element');
+    insertIntoContentEditable(currentFocusedElement, emoji);
   } else {
     // Handle input and textarea elements
-    insertIntoInputElement(currentFocusedElement, emoji);
+    console.log('Inserting into input/textarea element');
+    insertIntoInputElement(currentFocusedElement as HTMLInputElement | HTMLTextAreaElement, emoji);
   }
+  
+  showToast(`${emoji} inserted!`);
 }
 
 function insertIntoInputElement(element: HTMLInputElement | HTMLTextAreaElement, emoji: string) {
@@ -98,4 +110,34 @@ function copyToClipboard(text: string) {
   }).catch(err => {
     console.error('Failed to copy emoji to clipboard:', err);
   });
+}
+
+function showToast(message: string) {
+  // Create a simple toast notification
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #333;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    z-index: 10000;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  `;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => {
+      if (document.body.contains(toast)) {
+        document.body.removeChild(toast);
+      }
+    }, 300);
+  }, 2000);
 }
