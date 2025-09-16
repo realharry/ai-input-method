@@ -4,6 +4,7 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [react()],
+  base: './', // This ensures relative paths in the built files
   build: {
     rollupOptions: {
       input: {
