@@ -1,0 +1,1 @@
+chrome.action.onClicked.addListener(e=>{e.windowId&&chrome.sidePanel.open({windowId:e.windowId})});chrome.runtime.onMessage.addListener((e,i,n)=>{e.type==="INSERT_EMOJI"&&chrome.tabs.query({active:!0,currentWindow:!0},d=>{d[0]&&d[0].id&&chrome.tabs.sendMessage(d[0].id,{type:"INSERT_EMOJI",emoji:e.emoji})})});

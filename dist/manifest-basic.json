@@ -12,11 +12,5 @@
   "side_panel": {
     "default_path": "sidepanel-minimal.html"
   },
-  "action": {},
-  "web_accessible_resources": [
-    {
-      "resources": ["sidepanel-minimal.html"],
-      "matches": ["<all_urls>"]
-    }
-  ]
+  "action": {}
 }
