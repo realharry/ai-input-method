@@ -10,7 +10,7 @@
     "storage"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background-original.js"
   },
   "content_scripts": [
     {
@@ -19,7 +19,7 @@
     }
   ],
   "side_panel": {
-    "default_path": "sidepanel-minimal.html"
+    "default_path": "sidepanel.html"
   },
   "action": {
     "default_title": "Open Emoji Picker"
